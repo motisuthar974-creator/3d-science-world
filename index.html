@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>3D Science World | Explore in 3D</title>
+<style>
+:root{--bg:#071426;--panel:#10233d;--panel2:#142c4a;--line:#294565;--text:#edf6ff;--muted:#a8bdd3;--blue:#4bb5ff;--cyan:#5de1dc;--gold:#ffc76b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#12345a 0,#071426 42%,#050d19 100%);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif}
+button,input{font:inherit}.wrap{max-width:1180px;margin:auto;padding:22px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#4bb5ff,#665bff);display:grid;place-items:center;font-size:25px;box-shadow:0 8px 30px #248ee455}.brand h1{font-size:clamp(20px,4vw,30px);margin:0;letter-spacing:.2px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px;letter-spacing:1.5px}.lang{border:1px solid var(--line);background:#10233d;color:var(--text);padding:9px 13px;border-radius:12px}
+.hero{padding:30px 26px;border:1px solid #2c5277;border-radius:24px;background:linear-gradient(110deg,#14385d,#10223b 65%,#18294b);position:relative;overflow:hidden}.hero:after{content:"⚛";position:absolute;right:7%;top:-45px;font-size:210px;color:#8fd7ff12}.hero h2{font-size:clamp(25px,5vw,42px);line-height:1.15;margin:0 0 10px;max-width:650px}.hero h2 span{color:var(--cyan)}.hero p{color:#c2d4e7;max-width:620px;margin:0 0 20px;line-height:1.7}.search{display:flex;gap:10px;max-width:620px;position:relative;z-index:1}.search input{flex:1;min-width:0;border:1px solid #426487;background:#07182b;color:white;border-radius:13px;padding:13px 15px;outline:none}.search input:focus{border-color:var(--cyan)}.search button,.primary{border:0;background:linear-gradient(135deg,#4bb5ff,#36c9bd);color:#041526;font-weight:750;border-radius:13px;padding:12px 17px;cursor:pointer}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:28px 0 14px}.section-head h3{margin:0;font-size:21px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.cat{border:1px solid var(--line);background:linear-gradient(145deg,#142d4b,#0d1d32);border-radius:18px;padding:18px;text-align:left;color:var(--text);cursor:pointer;transition:.2s;min-height:130px}.cat:hover,.cat.active{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 12px 30px #0004}.cat .emoji{font-size:32px;display:block;margin-bottom:9px}.cat b{display:block;font-size:16px}.cat small{color:var(--muted)}
+.items{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.item{border:1px solid var(--line);border-radius:17px;background:#0e2036;overflow:hidden;cursor:pointer;transition:.2s}.item:hover{transform:translateY(-3px);border-color:#65cfff}.thumb{height:132px;display:grid;place-items:center;background:radial-gradient(circle,#24496b,#10233b 70%);font-size:58px;position:relative}.thumb:after{content:"3D";position:absolute;right:10px;bottom:9px;font-size:10px;letter-spacing:1px;color:#d9f5ff;background:#ffffff18;border:1px solid #ffffff25;border-radius:20px;padding:3px 8px}.item-info{padding:12px}.item-info b{display:block}.item-info small{color:var(--muted)}
+.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;grid-column:1/-1}
+footer{color:var(--muted);text-align:center;font-size:12px;padding:30px 10px}
+.modal{position:fixed;inset:0;background:#020813eF;display:none;z-index:10;padding:18px;overflow:auto}.modal.open{display:grid;place-items:center}.viewer{width:min(100%,1000px);background:#0c1c30;border:1px solid #355577;border-radius:22px;overflow:hidden;box-shadow:0 25px 90px #0009}.viewer-head{display:flex;justify-content:space-between;align-items:center;padding:16px 19px;border-bottom:1px solid var(--line);gap:12px}.viewer-head h3{margin:0}.close{background:#1c3552;color:white;border:1px solid #416080;border-radius:10px;padding:7px 12px;cursor:pointer}.viewer-body{display:grid;grid-template-columns:1.35fr 1fr;min-height:430px}.scene{position:relative;min-height:390px;background:radial-gradient(circle at center,#173958,#061322 75%)}#stage{width:100%;height:100%;min-height:390px;display:block}.scene-hint{position:absolute;left:12px;bottom:10px;color:#b8cde0;font-size:11px;background:#061322aa;padding:6px 9px;border-radius:9px}.details{padding:24px}.details h2{margin:0 0 5px;font-size:27px}.details .subtitle{color:var(--cyan);font-size:13px}.details p{color:#c3d3e3;line-height:1.65}.facts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:17px 0}.fact{padding:10px;background:#132a45;border-radius:11px}.fact small{display:block;color:var(--muted);font-size:11px}.fact b{font-size:14px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.controls button{background:#1a3552;border:1px solid #3d5e7e;color:white;padding:9px 12px;border-radius:10px;cursor:pointer}.controls button.active{background:#1b6571;border-color:#5de1dc}
+@media(max-width:800px){.categories,.items{grid-template-columns:repeat(2,1fr)}.viewer-body{grid-template-columns:1fr}.scene,#stage{min-height:320px}.details{padding:18px}.wrap{padding:15px}.hero{padding:24px 18px}}
+@media(max-width:420px){.cat{padding:13px;min-height:118px}.thumb{height:110px}.search{flex-direction:column}.search button{width:100%}.brand p{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="brand"><div class="logo">⚛</div><div><h1>3D Science World</h1><p>EXPLORE • LEARN • DISCOVER</p></div></div>
+ <button class="lang" id="langBtn">हिंदी + English</button>
+</header>
+<section class="hero">
+ <h2>दुनिया को <span>3D में</span> जानिए</h2>
+ <p>पदार्थों, जीव-जंतुओं, पेड़-पौधों, मानव शरीर और अंतरिक्ष को खोजें। किसी मॉडल को खोलें, घुमाएँ और ज़ूम करके समझें।</p>
+ <div class="search"><input id="search" placeholder="कुछ खोजें… Search anything (जैसे Gold, Tiger, Earth)"><button id="searchBtn">खोजें / Search</button></div>
+</section>
+<div class="section-head"><div><h3>विज्ञान की दुनिया / Explore Categories</h3><p>किसी विषय के आइकन पर टच करें</p></div></div>
+<div class="categories" id="categories"></div>
+<div class="section-head"><div><h3 id="itemsTitle">लोकप्रिय मॉडल / Popular Models</h3><p id="itemsSub">किसी मॉडल को चुनकर 3D में देखें</p></div></div>
+<div class="items" id="items"></div>
+<footer>3D Science World • शैक्षणिक उद्देश्य के लिए। 3D मॉडल सरल और प्रतीकात्मक हैं।</footer>
+</div>
+<div class="modal" id="modal">
+ <div class="viewer">
+  <div class="viewer-head"><h3 id="modalTitle">3D Model</h3><button class="close" id="close">✕ बंद करें</button></div>
+  <div class="viewer-body">
+   <div class="scene"><canvas id="stage"></canvas><div class="scene-hint">माउस / उंगली से घुमाएँ • Scroll / Pinch से Zoom</div></div>
+   <div class="details"><h2 id="detailName"></h2><div class="subtitle" id="detailSub"></div><p id="detailDesc"></p><div class="facts" id="facts"></div>
+    <div class="controls"><button id="rotate" class="active">⟳ Auto Rotate</button><button id="zoomIn">＋ Zoom In</button><button id="zoomOut">－ Zoom Out</button><button id="reset">↺ Reset View</button></div>
+   </div>
+  </div>
+ </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const categories=[
+ {id:'matter',icon:'⚗️',hi:'पदार्थ',en:'Matter & Elements',desc:'तत्व, धातु, गैस और अणु'},
+ {id:'animals',icon:'🦁',hi:'जीव-जंतु',en:'Animals & Birds',desc:'जानवर, पक्षी और समुद्री जीव'},
+ {id:'plants',icon:'🌳',hi:'पेड़-पौधे',en:'Plants & Trees',desc:'पेड़, फूल और वनस्पति'},
+ {id:'human',icon:'🧍',hi:'मानव शरीर',en:'Human Body',desc:'अंग, हड्डियाँ और कोशिकाएँ'},
+ {id:'space',icon:'🪐',hi:'अंतरिक्ष',en:'Space & Planets',desc:'ग्रह, तारे और आकाशगंगा'},
+ {id:'micro',icon:'🦠',hi:'सूक्ष्म जीव',en:'Microorganisms',desc:'बैक्टीरिया और कोशिकाएँ'},
+ {id:'minerals',icon:'💎',hi:'खनिज',en:'Minerals & Rocks',desc:'रत्न, पत्थर और खनिज'},
+ {id:'machines',icon:'⚙️',hi:'मशीनें',en:'Machines & Technology',desc:'मशीनें और तकनीक'}
+];
+const data=[
+['matter','सोना','Gold','Au','79','पीली चमकदार धातु। आभूषण और इलेक्ट्रॉनिक्स में उपयोग।','🥇','gold'],
+['matter','चाँदी','Silver','Ag','47','चमकदार धातु, आभूषण और विद्युत संपर्कों में उपयोग।','🪙','silver'],
+['matter','लोहा','Iron','Fe','26','मजबूत धातु, निर्माण और औज़ारों में उपयोग।','🔩','iron'],
+['matter','पानी का अणु','Water Molecule','H₂O','—','दो हाइड्रोजन और एक ऑक्सीजन परमाणु से बना अणु।','💧','molecule'],
+['matter','ऑक्सीजन','Oxygen','O₂','8','जीवन और श्वसन के लिए आवश्यक गैस।','🫧','atom'],
+['animals','शेर','Lion','Panthera leo','—','बड़ी बिल्ली परिवार का सामाजिक शिकारी स्तनधारी।','🦁','animal'],
+['animals','हाथी','Elephant','Loxodonta','—','विशाल स्थलीय स्तनधारी, सूँड़ इसकी विशेष पहचान है।','🐘','animal'],
+['animals','तितली','Butterfly','Lepidoptera','—','रंगीन पंखों वाला परागण में मददगार कीट।','🦋','animal'],
+['animals','मछली','Fish','Pisces','—','पानी में रहने वाला गलफड़ों से साँस लेने वाला जीव।','🐠','animal'],
+['plants','बरगद','Banyan Tree','Ficus benghalensis','—','हवाई जड़ों वाला विशाल और दीर्घायु वृक्ष।','🌳','plant'],
+['plants','कमल','Lotus','Nelumbo nucifera','—','पानी में उगने वाला सुंदर फूल।','🪷','plant'],
+['plants','सूरजमुखी','Sunflower','Helianthus annuus','—','बड़े पीले पुष्प वाला पौधा।','🌻','plant'],
+['human','मानव हृदय','Human Heart','Organ','4 chambers','रक्त को पूरे शरीर में पंप करता है।','❤️','heart'],
+['human','मानव कंकाल','Human Skeleton','206 bones','206','शरीर को सहारा और आंतरिक अंगों को सुरक्षा देता है।','🦴','skeleton'],
+['human','फेफड़े','Lungs','Organ','2','शरीर में ऑक्सीजन और कार्बन डाइऑक्साइड का आदान-प्रदान।','🫁','lungs'],
+['space','पृथ्वी','Earth','Planet','1 Moon','हमारा घर और ज्ञात जीवन वाला ग्रह।','🌍','planet'],
+['space','मंगल','Mars','Planet','2 moons','लाल ग्रह, जिसकी सतह पर आयरन ऑक्साइड है।','🔴','planet'],
+['space','शनि','Saturn','Planet','Rings','अपने सुंदर वलयों के लिए प्रसिद्ध गैसीय ग्रह।','🪐','saturn'],
+['micro','बैक्टीरिया','Bacteria','Microbe','—','एक कोशिका वाले सूक्ष्म जीवों का बड़ा समूह।','🦠','microbe'],
+['micro','पशु कोशिका','Animal Cell','Cell','—','जीवों के शरीर की मूल संरचनात्मक इकाई।','🔬','cell'],
+['minerals','हीरा','Diamond','Carbon','10 Mohs','कार्बन का अत्यंत कठोर प्राकृतिक क्रिस्टलीय रूप।','💎','crystal'],
+['minerals','क्वार्ट्ज','Quartz','SiO₂','7 Mohs','प्रकृति में मिलने वाला सामान्य खनिज।','🔮','crystal'],
+['machines','गियर','Gear','Machine part','—','घूर्णन और गति को दूसरे गियर तक पहुँचाता है।','⚙️','gear'],
+['machines','रॉकेट','Rocket','Vehicle','—','प्रतिक्रिया बल से अंतरिक्ष में जाने वाला वाहन।','🚀','rocket']
+].map((x,i)=>({id:i,cat:x[0],hi:x[1],en:x[2],formula:x[3],fact:x[4],desc:x[5],icon:x[6],type:x[7]}));
+let selected='all', scene, camera, renderer, controls, currentObject, auto=true, animId;
+const $=id=>document.getElementById(id);
+function renderCategories(){ $('categories').innerHTML=categories.map(c=>`<button class="cat ${selected===c.id?'active':''}" data-id="${c.id}"><span class="emoji">${c.icon}</span><b>${c.hi}</b><small>${c.en}</small></button>`).join('');document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{selected=b.dataset.id;renderCategories();renderItems();});}
+function renderItems(q=''){let list=data.filter(x=>(selected==='all'||x.cat===selected)&&(!q||[x.hi,x.en,x.formula,x.desc].join(' ').toLowerCase().includes(q.toLowerCase())));$('itemsTitle').textContent=selected==='all'?'लोकप्रिय मॉडल / Popular Models':categories.find(c=>c.id===selected).hi+' / '+categories.find(c=>c.id===selected).en;$('itemsSub').textContent=`${list.length} मॉडल / Models • चुनकर 3D में देखें`; $('items').innerHTML=list.length?list.map(x=>`<div class="item" data-id="${x.id}"><div class="thumb">${x.icon}</div><div class="item-info"><b>${x.hi}</b><small>${x.en} · ${x.formula}</small></div></div>`).join(''):'<div class="empty">कोई परिणाम नहीं मिला / No results found</div>';document.querySelectorAll('.item').forEach(b=>b.onclick=()=>openModel(data.find(x=>x.id==b.dataset.id)));}
+$('searchBtn').onclick=()=>{selected='all';renderCategories();renderItems($('search').value.trim());};$('search').addEventListener('keydown',e=>{if(e.key==='Enter')$('searchBtn').click();});
+function openModel(item){$('modal').classList.add('open');$('modalTitle').textContent=item.hi+' / '+item.en;$('detailName').textContent=item.hi;$('detailSub').textContent=item.en+' • '+item.formula;$('detailDesc').textContent=item.desc;$('facts').innerHTML=`<div class="fact"><small>सूत्र / Formula</small><b>${item.formula}</b></div><div class="fact"><small>विशेष जानकारी / Fact</small><b>${item.fact}</b></div>`;init3D(item.type);}
+$('close').onclick=()=>{$('modal').classList.remove('open');if(animId)cancelAnimationFrame(animId);if(renderer){renderer.dispose();renderer=null;}};
+function init3D(type){
+ const canvas=$('stage');if(renderer){renderer.dispose();renderer=null;}if(animId)cancelAnimationFrame(animId);
+ scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(45,canvas.clientWidth/390,0.1,100);camera.position.set(0,0,6);
+ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(canvas.clientWidth,390,false);
+ scene.add(new THREE.AmbientLight(0xffffff,1.5));let light=new THREE.DirectionalLight(0xffffff,2);light.position.set(4,5,6);scene.add(light);
+ controls=new THREE.OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.minDistance=2;controls.maxDistance=12;
+ currentObject=new THREE.Group();scene.add(currentObject);
+ const mat=(color,rough=.35,metal=0)=>new THREE.MeshStandardMaterial({color,roughness:rough,metalness:metal});
+ function sphere(x,y,z,r,color){let m=new THREE.Mesh(new THREE.SphereGeometry(r,32,24),mat(color));m.position.set(x,y,z);currentObject.add(m);return m;}
+ function rod(a,b,r,color){let d=new THREE.Vector3().subVectors(b,a),m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),16),mat(color));m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());currentObject.add(m);}
+ if(type==='atom'){sphere(0,0,0,.45,0xff785e);for(let j=0;j<3;j++){let ring=new THREE.Mesh(new THREE.TorusGeometry(1.25,.018,8,100),mat(0x62d9ff));ring.rotation.set(j*.8,j*1.1,j*.6);currentObject.add(ring);sphere(Math.cos(j*2)*1.25,Math.sin(j*2)*1.25,0,.11,0x66dfff);}}
+ else if(type==='molecule'){sphere(-.65,0,0,.48,0xff453a);sphere(.15,.55,0,.28,0xe8f4ff);sphere(.15,-.55,0,.28,0xe8f4ff);rod(new THREE.Vector3(-.35,.25,0),new THREE.Vector3(-.05,.45,0),.08,0xaaaaaa);rod(new THREE.Vector3(-.35,-.25,0),new THREE.Vector3(-.05,-.45,0),.08,0xaaaaaa);}
+ else if(type==='planet'||type==='saturn'){sphere(0,0,0,1.25,type==='saturn'?0xd6bd8c:0x287bd2);if(type==='planet'){for(let i=0;i<8;i++){let cloud=sphere((Math.random()-.5)*1.5,(Math.random()-.5)*1.5,1.05,.08,0x75d0c7);}}else{let ring=new THREE.Mesh(new THREE.RingGeometry(1.5,2.15,80),mat(0xcbb58c,.8));ring.rotation.x=1.2;currentObject.add(ring);}}
+ else if(type==='heart'){sphere(-.38,.15,0,.62,0xb51f43);sphere(.38,.15,0,.62,0xb51f43);let tip=new THREE.Mesh(new THREE.ConeGeometry(.77,1.3,32),mat(0xb51f43));tip.position.set(0,-.65,0);tip.rotation.z=Math.PI;currentObject.add(tip);}
+ else if(type==='plant'){let trunk=new THREE.Mesh(new THREE.CylinderGeometry(.12,.2,2,16),mat(0x8b542d));currentObject.add(trunk);for(let i=0;i<8;i++)sphere((Math.random()-.5)*1.3,.7+Math.random()*.8,(Math.random()-.5)*.7,.55,0x238c55);}
+ else if(type==='gear'){let g=new THREE.Mesh(new THREE.TorusGeometry(1,.24,12,12),mat(0x9eb4c8,.25,.8));currentObject.add(g);sphere(0,0,0,.38,0x405c75);for(let i=0;i<10;i++){let a=i*Math.PI/5;let tooth=new THREE.Mesh(new THREE.BoxGeometry(.28,.4,.35),mat(0x9eb4c8,.25,.8));tooth.position.set(Math.cos(a)*1.05,Math.sin(a)*1.05,0);tooth.rotation.z=a;currentObject.add(tooth);}}
+ else if(type==='crystal'){let geo=new THREE.OctahedronGeometry(1.35,0);let m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x74cfff,metalness:.25,roughness:.15,transparent:true,opacity:.85}));currentObject.add(m);}
+ else if(type==='micro'||type==='cell'){sphere(0,0,0,1,0x69b77c);for(let i=0;i<15;i++){let p=sphere((Math.random()-.5)*1.5,(Math.random()-.5)*1.5,(Math.random()-.5)*1.5,.12,0xffc76b);} }
+ else if(type==='skeleton'){for(let i=0;i<7;i++)sphere(0,1-i*.32,0,.18,0xe6dfc8);rod(new THREE.Vector3(0,.2,0),new THREE.Vector3(-.8,-.7,0),.08,0xe6dfc8);rod(new THREE.Vector3(0,.2,0),new THREE.Vector3(.8,-.7,0),.08,0xe6dfc8);rod(new THREE.Vector3(0,-.8,0),new THREE.Vector3(-.4,-1.8,0),.09,0xe6dfc8);rod(new THREE.Vector3(0,-.8,0),new THREE.Vector3(.4,-1.8,0),.09,0xe6dfc8);}
+ else if(type==='lungs'){sphere(-.5,0,0,.7,0xe88b9c);sphere(.5,0,0,.7,0xe88b9c);rod(new THREE.Vector3(0,1,0),new THREE.Vector3(0,.1,0),.12,0xd4e1e8);}
+ else if(type==='rocket'){let body=new THREE.Mesh(new THREE.ConeGeometry(.65,2.5,32),mat(0xd9e7f2));body.rotation.z=0;currentObject.add(body);sphere(0,.2,.45,.22,0x3c9ed8);}
+ else if(type==='animal'){sphere(0,0,0,.85,0xc68b45);sphere(.78,.35,0,.42,0xc68b45);for(let i=-1;i<=1;i+=2){rod(new THREE.Vector3(i*.45,-.5,0),new THREE.Vector3(i*.55,-1.2,0),.13,0x8b633b);} }
+ else {sphere(0,0,0,1.2, type==='gold'?0xe7b735:type==='silver'?0xbfcbd7:0x8795a5);if(type==='iron'){currentObject.children[0].material.color.set(0x7e8793);}}
+ auto=true;$('rotate').classList.add('active');controls.autoRotate=true;controls.autoRotateSpeed=1.5;
+ function animate(){animId=requestAnimationFrame(animate);controls.autoRotate=auto;controls.update();renderer.render(scene,camera);}animate();
+}
+$('rotate').onclick=()=>{auto=!auto;$('rotate').classList.toggle('active',auto);};$('zoomIn').onclick=()=>{camera.position.multiplyScalar(.82);};$('zoomOut').onclick=()=>{camera.position.multiplyScalar(1.22);};$('reset').onclick=()=>{camera.position.set(0,0,6);controls.reset();};
+window.addEventListener('resize',()=>{if(renderer&&camera){let c=$('stage');camera.aspect=c.clientWidth/390;camera.updateProjectionMatrix();renderer.setSize(c.clientWidth,390,false);}});
+renderCategories();renderItems();
+</script>
+</body></html>
